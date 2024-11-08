@@ -1,0 +1,60 @@
+#!/bin/bash
+
+while true
+do
+    clear  # Clear screen for better readability
+    
+    # Get input numbers
+    echo "Enter first number:"
+    read num1
+    echo "Enter second number:"
+    read num2
+
+    # Display menu
+    echo -e "\nChoose operation:"
+    echo "1. Addition"
+    echo "2. Subtraction"
+    echo "3. Multiplication"
+    echo "4. Division"
+    echo "Enter your choice (1-4):"
+    read choice
+
+    # Create result file with input numbers
+    echo "=== Arithmetic Operation ===" > result.txt
+    echo "First Number: $num1" >> result.txt
+    echo "Second Number: $num2" >> result.txt
+    
+    # Process choice using case statement
+    case $choice in
+        1)
+            echo " Addition" >> result.txt
+            echo "Result: $((num1 + num2))" >> result.txt
+            ;;
+        2)
+            echo " Subtraction" >> result.txt
+            echo "Result: $((num1 - num2))" >> result.txt
+            ;;
+        3)
+            echo " Multiplication" >> result.txt
+            echo "Result: $((num1 * num2))" >> result.txt
+            ;;
+        4)
+            if [ $num2 -eq 0 ]
+            then
+                echo " Division" >> result.txt
+                echo "Result: Cannot divide by zero" >> result.txt
+            else
+                echo " Division" >> result.txt
+                echo "Result: $((num1 / num2))" >> result.txt
+            fi
+            ;;
+        *)
+            echo "Invalid choice!" >> result.txt
+            ;;
+    esac
+
+    echo " " >> result.txt
+
+    # Display result
+    cat result.txt
+done

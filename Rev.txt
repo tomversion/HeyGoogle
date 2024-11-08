@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Read number from user
+echo "Enter a number: "
+read num
+
+# Initialize reversed number
+rev=0
+
+# Store original number
+original=$num
+
+# Reverse the number
+while [ $num -gt 0 ]
+do
+    digit=$((num % 10))
+    rev=$((rev * 10 + digit))
+    num=$((num / 10))
+done
+
+# Create two temporary files for join operation
+echo "Input- $original" > file1.txt
+echo "Output- $rev" > file2.txt
+
+# Join the files and save result
+join -a 1 -a 2 file1.txt file2.txt > result.txt
+
+# Display result
+cat result.txt
+
+# Clean up temporary files
+rm file1.txt file2.txt

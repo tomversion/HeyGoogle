@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Prompt for student marks
+echo "Enter marks for three subjects (out of 100 each)"
+echo "Enter marks for Subject 1: "
+read sub1
+echo "Enter marks for Subject 2: "
+read sub2
+echo "Enter marks for Subject 3: "
+read sub3
+
+# Calculate total and percentage
+total=$((sub1 + sub2 + sub3))
+percentage=$((total * 100 / 300))
+
+# Create temporary files with subject marks
+echo "Subject 1: $sub1" > marks.txt
+echo "Subject 2: $sub2" >> marks.txt
+echo "Subject 3: $sub3" >> marks.txt
+echo "Total: $total" > result1.txt
+echo "Percentage: $percentage%" > result2.txt
+
+# Determine grade and store in file
+if [ $percentage -ge 90 ]
+then
+    echo "Grade: A" > grade.txt
+elif [ $percentage -ge 75 ]
+then
+    echo "Grade: B" > grade.txt
+elif [ $percentage -ge 50 ]
+then
+    echo "Grade: C" > grade.txt
+else
+    echo "Grade: Fail" > grade.txt
+fi
+
+# Combine all results using join and redirection
+echo -e "\n=== Student Grade Report ===" > final_result.txt
+cat marks.txt >> final_result.txt
+cat result1.txt >> final_result.txt
+cat result2.txt >> final_result.txt
+cat grade.txt >> final_result.txt
+echo -e "========================" >> final_result.txt
+
+# Display the final result
+cat final_result.txt
+
+# Clean up temporary files
+rm marks.txt result1.txt result2.txt grade.txt

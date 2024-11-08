@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "Enter a string:"
+read str
+
+clean_str=$(echo "$str" | tr '[:upper:]' '[:lower:]' | tr -d ' ')
+rev_str=$(echo "$clean_str" | rev)
+
+echo "Original string: $str" > result.txt
+echo "Cleaned string: $clean_str" >> result.txt
+
+if [ "$clean_str" = "$rev_str" ]
+then
+    echo "Result: It is a palindrome" >> result.txt
+else
+    echo "Result: It is not a palindrome" >> result.txt
+fi
+
+cat result.txt

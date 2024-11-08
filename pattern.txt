@@ -1,0 +1,32 @@
+
+echo "Enter 25 numbers:"
+numbers=()
+for ((i=0; i<25; i++))
+do
+    read num
+    numbers+=($num)
+done
+
+# Create pattern file
+{
+    echo "Pattern:"
+    echo "--------"
+    
+    index=0
+    row=1
+    while [ $index -lt 25 ]
+    do
+        for ((col=0; col<row && index<25; col++))
+        do
+            printf "%d\t" ${numbers[$index]}
+            index=$((index + 1))
+        done
+        echo
+        row=$((row + 1))
+    done
+    
+    echo "--------"
+} > result.txt
+
+# Display pattern
+cat result.txt

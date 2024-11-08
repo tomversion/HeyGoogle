@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# Create temporary files to store numbers
+touch numbers.txt even.txt odd.txt prime.txt
+
+# Function to check if a number is prime
+is_prime() {
+    num=$1
+    if [ $num -lt 2 ]; then
+        return 1
+    fi
+    for ((i=2; i*i<=num; i++))
+    do
+        if [ $((num%i)) -eq 0 ]; then
+            return 1
+        fi
+    done
+    return 0
+}
+
+# Read 25 numbers from user
+echo "Enter 25 numbers:"
+count=1
+even_count=0
+odd_count=0
+prime_count=0
+
+while [ $count -le 25 ]
+do
+    read num
+    echo $num >> numbers.txt
+    
+    # Check and store even numbers (first 5)
+    if [ $((num%2)) -eq 0 ] && [ $even_count -lt 5 ]; then
+        echo $num >> even.txt
+        even_count=$((even_count+1))
+    fi
+    
+    # Check and store odd numbers (first 5)
+    if [ $((num%2)) -ne 0 ] && [ $odd_count -lt 5 ]; then
+        echo $num >> odd.txt
+        odd_count=$((odd_count+1))
+    fi
+    
+    # Check and store prime numbers (first 5)
+    if [ $prime_count -lt 5 ]; then
+        if is_prime $num; then
+            echo $num >> prime.txt
+            prime_count=$((prime_count+1))
+        fi
+    fi
+    
+    count=$((count+1))
+done
+
+# Create final result file
+echo "First five even numbers:" > result.txt
+cat even.txt >> result.txt
+echo -e "\nFirst five odd numbers:" >> result.txt
+cat odd.txt >> result.txt
+echo -e "\nFirst five prime numbers:" >> result.txt
+cat prime.txt >> result.txt
+
+# Display results
+cat result.txt
+
+# Clean up temporary files
+rm numbers.txt even.txt odd.txt prime.txt

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+echo "Enter year (YYYY):"
+read year
+
+echo "Enter month (1-12):"
+read month
+
+# Validate month input
+if [ $month -lt 1 ] || [ $month -gt 12 ]
+then
+    echo "Error: Invalid month. Month must be between 1 and 12" > result.txt
+    cat result.txt
+    exit 1
+fi
+
+# Display calendar using cal command
+{
+    echo "Calendar for month $month, year $year:"
+    cal $month $year
+} > result.txt
+
+cat result.txt
